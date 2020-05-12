@@ -76,5 +76,27 @@ RSpec.describe 'As a visitor' do
       expect(page).to have_content(@george.name)
     end
 
+    it 'has a list of all reviews for that shelter' do
+
+      review1 = @shelter1.reviews.create(title: "Love this place!", rating: 5, content: "This shelter has the nicest employees and the most well-behaved dogs!")
+      review2 = @shelter1.reviews.create(title: "Not a fan of this place.", rating: 1, content: "The dog I adopted from this shelter bit me!")
+      review1 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
+
+      visit "/shelters/#{@shelter1.id}"
+
+      expect(page).to have_content("All reviews for #{@shelter1.name}:")
+      
+      within "#review-#{review1.id}" do
+      end
+    end
   end
 end
+
+# As a visitor,
+# When I visit a shelter's show page,
+# I see a list of reviews for that shelter
+# Each review will have:
+# - title
+# - rating
+# - content
+# - an optional picture

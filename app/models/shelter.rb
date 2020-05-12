@@ -6,7 +6,8 @@ class Shelter < ApplicationRecord
                         :zip
 
   has_many :pets, dependent: :delete_all
-
+  has_many :reviews, dependent: :delete_all
+  
   def num_pets
     pets.count
   end
