@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AdoptDontShop</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <nav class = "topnav">
+      <p><%= link_to "Pet Index", "/pets" %></p>
+      <p><%= link_to "Shelter Index", "/shelters" %></p>
+    </nav>
+    
+    <% flash.each do |name, msg| %>
+      <div class= "<%=name%>-flash">
+        <p><%= msg %></p>
+      </div>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

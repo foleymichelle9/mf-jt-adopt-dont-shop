@@ -1,0 +1,20 @@
+<h1><%= @shelter.name %></h1>
+<h3 align = "center"> Number of pets currently: <%= @shelter.num_pets %></h3>
+<p align="center"> <%= link_to "Only Adoptable Pets", "/shelters/#{@shelter.id}/pets?sort=only_adoptable"%>
+<p align="center"> <%= link_to "Only Pets with an Adoption Pending Status", "/shelters/#{@shelter.id}/pets?sort=only_pending"%>
+<h3 align = "center"><%= link_to "Create Pet", "/shelters/#{@shelter.id}/pets/new" %></h3>
+
+
+<ol>
+<% @pets.sort_by_status.each do |pet| %>
+  <section id="pet-<%=pet.id%>">
+    <img src="<%=pet.image%>" width="200", height=auto></img><br>
+    <li><p>Name: <strong><%= link_to "#{pet.name}", "/pets/#{pet.id}"%></strong></p></li><br>
+    <p>Age: <strong><%= pet.age %></strong></p><br>
+    <p>Sex: <strong><%= pet.sex %></strong></p><br>
+    <p>Status:<strong> <%= pet.adoptable_status %></strong></p><br>
+    <%= link_to "Edit Pet", "/pets/#{pet.id}/edit" %><br>
+    <%= link_to "Delete Pet", "/shelters/#{@shelter.id}/pets/#{pet.id}", method: :delete %>
+  </section>
+<% end %>
+</ol>

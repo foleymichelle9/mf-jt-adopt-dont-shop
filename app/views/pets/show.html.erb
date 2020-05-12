@@ -1,0 +1,15 @@
+<h2><%= @pet.name %></h2>
+
+<img src="<%= @pet.image%>" width= "200", height= auto></img><br>
+<h4>Description: <%= @pet.description %></h4><br>
+<h4>Age: <%= @pet.age %></h4><br>
+<h4>Sex: <%= @pet.sex %></h4><br>
+<p>Adoption Status: </p><h4><%= @pet.adoptable_status %></h4><br>
+
+<%= link_to "Update Pet", "/pets/#{@pet.id}/edit" %><br>
+<%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete %>
+<% if @pet.status == true %>
+  <p align="center"><%= link_to "Adopt this Pet!", "/pets/#{@pet.id}/adoptable", method: :patch %></p>
+<% else %>
+  <p align="center"><%= link_to "Change status to Adoptable", "/pets/#{@pet.id}/pending", method: :patch %></p>
+<% end %>

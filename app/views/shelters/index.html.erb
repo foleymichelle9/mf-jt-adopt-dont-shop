@@ -1,0 +1,18 @@
+<h1 align="center">All Adopt Don't Shop Shelters</h1>
+<ol>
+<p align="center"> <%= link_to "Sort Shelters Alphabetically", "/shelters?sort=shelters_alphabetical"%>
+<p align="center"> <%= link_to "Sort Shelters by Number Pets", "/shelters?sort=num_pets"%>
+
+<% @shelters.each_with_index do |shelter, index| %>
+  <section id="shelter-<%= index %>">
+    <h2><%= link_to "#{shelter.name}", "/shelters/#{shelter.id}" %></h2>
+    <p>Address:<%= shelter.address %></p>
+    <p>City:<%= shelter.city %></p>
+    <p>State:<%= shelter.state %></p>
+    <p>Zipcode:<%= shelter.zip %></p>
+    <%= link_to "Edit Shelter", "/shelters/#{shelter.id}/edit" %><br>
+    <%= link_to "Delete Shelter", "/shelters/#{shelter.id}", method: :delete %>
+  </section>
+<% end %>
+</ol>
+<p align="center"><%= link_to "New Shelter", "/shelters/new" %></p>

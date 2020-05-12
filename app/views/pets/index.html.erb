@@ -1,0 +1,18 @@
+<h1>All Pets</h1>
+<p align="center"> <%= link_to "Adoptable Pets First", "/pets?sort=adoptable_pets"%>
+<p align="center"> <%= link_to "Only Adoptable Pets", "/pets?sort=only_adoptable"%>
+<p align="center"> <%= link_to "Only Pets with an Adoption Pending Status", "/pets?sort=only_pending"%>
+
+<ol>
+<% @pets.each_with_index do |pet, index| %>
+  <section id="pet-<%= index%>">
+    <li><img src="<%= pet.image%>" width=  "400", height= auto></img></li>
+    <h4>Name: <%= link_to "#{pet.name}", "/pets/#{pet.id}" %></h4>
+    <p>Approximate Age: <%= pet.age %></p>
+    <p>Sex: <%= pet.sex %></p>
+    <p>Shelter: <%= link_to "#{pet.shelter.name}", "/shelters/#{pet.shelter.id}"%></p>
+    <p><%= pet.adoptable_status %></p>
+    <%= link_to "Edit Pet", "/pets/#{pet.id}/edit" %><br>
+    <%= link_to "Delete Pet", "/pets/#{pet.id}", method: :delete %>
+  </section>
+<% end %>
