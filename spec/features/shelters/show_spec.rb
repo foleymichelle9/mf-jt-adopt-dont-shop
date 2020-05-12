@@ -83,7 +83,7 @@ RSpec.describe 'As a visitor' do
       review3 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
 
       visit "/shelters/#{@shelter1.id}"
-
+save_and_open_page
       expect(page).to have_content("All reviews for #{@shelter1.name}:")
 
       within "#review-#{review1.id}" do

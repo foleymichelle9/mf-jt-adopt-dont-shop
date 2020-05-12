@@ -10,11 +10,12 @@
 
 <h3>All reviews for <%= @shelter.name %>: </h3>
 <ol>
-<%= @shelter.reviews.each do |review| %>
+<% @shelter.reviews.each do |review| %>
 <section id="review-<%=review.id%>">
-  <p>Review Title: <li><%= review.title %></li></p>
-  <p>Rating: <%= review.rating %></p>
-  <p>Content: <%= review.content %></p>
+  <p><strong>Review Title: <li><%= review.title %></li></strong></p>
+  <p><strong>Rating: <%= review.rating %></strong></p>
+  <p><strong>Content: <%= review.content %></strong></p>
+  <img src="<%= review.image%>" width= "200", height= auto></img><br>
 </section>
 <% end %>
 </ol>
