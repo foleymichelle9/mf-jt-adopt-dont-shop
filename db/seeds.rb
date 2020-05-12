@@ -64,3 +64,7 @@ charlie = shelter3.pets.create!(image: 'https://encrypted-tbn0.gstatic.com/image
                               age: 6,
                               description: "Your new best friend",
                               sex: "male")
+
+review1 = shelter1.reviews.create(title: "Love this place!", rating: 5, content: "This shelter has the nicest employees and the most well-behaved dogs!")
+review2 = shelter1.reviews.create(title: "Not a fan of this place.", rating: 1, content: "The dog I adopted from this shelter bit me!", image: "https://images-prod.healthline.com/hlcmsresource/images/imce/animal-bites-finger_thumb.jpg")
+review3 = shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")

@@ -8,14 +8,17 @@
 <%= button_to "Update Shelter", "/shelters/#{@shelter.id}/edit", method: :get %>
 <%= button_to "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete %>
 
+<p align="center"><%=link_to "Add Review", "/shelters/#{@shelter.id}/reviews/new"  %>
+
 <h3>All reviews for <%= @shelter.name %>: </h3>
 <ol>
 <% @shelter.reviews.each do |review| %>
 <section id="review-<%=review.id%>">
-  <p><strong>Review Title: <li><%= review.title %></li></strong></p>
+  <p><strong><li>Review Title: <%= review.title %></li></strong></p>
   <p><strong>Rating: <%= review.rating %></strong></p>
   <p><strong>Content: <%= review.content %></strong></p>
   <img src="<%= review.image%>" width= "200", height= auto></img><br>
+  <%= link_to "Edit Review", "/reviews/#{review.id}/edit", method: :get %>
 </section>
 <% end %>
 </ol>
