@@ -7,3 +7,14 @@
 
 <%= button_to "Update Shelter", "/shelters/#{@shelter.id}/edit", method: :get %>
 <%= button_to "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete %>
+
+<h3>All reviews for <%= @shelter.name %>: </h3>
+<ol>
+<%= @shelter.reviews.each do |review| %>
+<section id="review-<%=review.id%>">
+  <p>Review Title: <li><%= review.title %></li></p>
+  <p>Rating: <%= review.rating %></p>
+  <p>Content: <%= review.content %></p>
+</section>
+<% end %>
+</ol>

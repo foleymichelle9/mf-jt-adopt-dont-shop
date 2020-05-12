@@ -80,13 +80,28 @@ RSpec.describe 'As a visitor' do
 
       review1 = @shelter1.reviews.create(title: "Love this place!", rating: 5, content: "This shelter has the nicest employees and the most well-behaved dogs!")
       review2 = @shelter1.reviews.create(title: "Not a fan of this place.", rating: 1, content: "The dog I adopted from this shelter bit me!")
-      review1 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
+      review3 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
 
       visit "/shelters/#{@shelter1.id}"
 
       expect(page).to have_content("All reviews for #{@shelter1.name}:")
-      
+
       within "#review-#{review1.id}" do
+        expect(page).to have_content("#{review1.title}")
+        expect(page).to have_content("#{review1.rating}")
+        expect(page).to have_content("#{review1.content}")
+      end
+
+      within "#review-#{review2.id}" do
+        expect(page).to have_content("#{review2.title}")
+        expect(page).to have_content("#{review2.rating}")
+        expect(page).to have_content("#{review2.content}")
+      end
+
+      within "#review-#{review3.id}" do
+        expect(page).to have_content("#{review3.title}")
+        expect(page).to have_content("#{review3.rating}")
+        expect(page).to have_content("#{review3.content}")
       end
     end
   end
