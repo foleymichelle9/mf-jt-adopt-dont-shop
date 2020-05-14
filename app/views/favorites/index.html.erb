@@ -1,8 +1,9 @@
 <h1>Pets You Have Favorited</h1>
 <ol>
-<%= @favorite_pets.each do |pet| %>
+<% @favorite_pets.each do |pet| %>
 <section class="pet-<%=pet.id%>">
   <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>
-  <img src="<%= pet.image%>" width=  "400", height= auto></img></li>
+  <img src="<%= pet.image%>" width=  "400", height= auto></img>
+  <%= button_to "Remove from Favorites", "/favorites/#{pet.id}", method: :delete %>
 </section>
 <% end %>

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Favorites index page' do
-  it 'shows all the pets I have favorited including pets name and image' do
+  before(:each) do
     @shelter1 = Shelter.create(name: "Pet House",
                                  address: "12 Main St.",
                                  city: "Denver",
@@ -55,6 +55,9 @@ RSpec.describe 'Favorites index page' do
                                    age: 6,
                                    description: "Your new best friend",
                                    sex: "male")
+  end
+
+  it 'shows all the pets I have favorited including pets name and image' do
 
     visit "/pets/#{@lucille.id}"
     click_button "Add to Favorites"
@@ -86,4 +89,42 @@ RSpec.describe 'Favorites index page' do
     expect(page).to_not have_content("#{@maceo.name}")
     expect(page).to_not have_content("#{@charlie.name}")
   end
+
+  it "has a button next to each pet to remove that pet from favorites" do
+
+    visit "/pets/#{@lucille.id}"
+    click_button "Add to Favorites"
+    expect(page).to have_content("Number of pets favorited: 1")
+
+    visit "/pets/#{@george.id}"
+    click_button "Add to Favorites"
+    expect(page).to have_content("Number of pets favorited: 2")
+
+    visit "/pets/#{@bob.id}"
+    click_button "Add to Favorites"
+    expect(page).to have_content("Number of pets favorited: 3")
+
+    visit "/pets/#{@gladys.id}"
+    click_button "Add to Favorites"
+    expect(page).to have_content("Number of pets favorited: 4")
+
+    visit "/favorites"
+    within ".pet-#{@lucille.id}" do
+      click_button "Remove from Favorites"
+    end
+
+    expect(page).to_not have_css("img[src*= '#{@lucille.image}']")
+    expect(current_path).to eq("/favorites")
+  end
 end
+
+
+#
+# As a visitor
+# When I have added pets to my favorites list
+# And I visit my favorites page ("/favorites")
+# Next to each pet, I see a button or link to remove that pet from my favorites
+# When I click on that button or link to remove a favorite
+# A delete request is sent to "/favorites/:pet_id"
+# And I'm redirected back to the favorites page where I no longer see that pet listed
+# And I also see that the favorites indicator has decremented by 1
