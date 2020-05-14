@@ -35,9 +35,8 @@ RSpec.describe 'favorite indicator in nav bar' do
 
     expect(page).to have_content("Number of pets favorited: 1")
 
-    click_button "Add to Favorites"
+    expect(page).to_not have_button("Add to Favorites")
 
-    expect(page).to have_content("You have already favorited #{@lucille.name}")
     expect(page).to have_content("Number of pets favorited: 1")
   end
 
