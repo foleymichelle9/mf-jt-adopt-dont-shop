@@ -8,8 +8,9 @@
 
 <%= link_to "Update Pet", "/pets/#{@pet.id}/edit" %><br>
 <%= link_to "Delete Pet", "/pets/#{@pet.id}", method: :delete %>
-<%= button_to "Add to Favorites", "/favorites/#{@pet.id}", method: :patch %>
-
+<% if !favorites.contents.keys.include?(@pet.id.to_s)  %>
+  <%= button_to "Add to Favorites", "/favorites/#{@pet.id}", method: :patch %>
+<% end %>
 <% if @pet.status == true %>
   <p align="center"><%= link_to "Adopt this Pet!", "/pets/#{@pet.id}/adoptable", method: :patch %></p>
 <% else %>
