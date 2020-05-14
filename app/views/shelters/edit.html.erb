@@ -1,19 +1,19 @@
 <%= form_tag "/shelters/#{@shelter.id}", method: :patch do %>
 
   <%= label_tag "Name" %><br>
-  <%= text_field_tag :name, @shelter.name %><br>
+  <%= text_field_tag :name, nil, placeholder: @shelter.name %><br>
 
   <%= label_tag "Address" %><br>
-  <%= text_field_tag :address, @shelter.address %><br>
+  <%= text_field_tag :address, nil, placeholder: @shelter.address %><br>
 
   <%= label_tag "City" %><br>
-  <%= text_field_tag :city, @shelter.city %><br>
+  <%= text_field_tag :city, nil, placeholder: @shelter.city %><br>
 
   <%= label_tag "State" %><br>
-  <%= text_field_tag :state, @shelter.state %><br>
+  <%= text_field_tag :state, nil, placeholder: @shelter.state %><br>
 
   <%= label_tag "Zipcode" %><br>
-  <%= text_field_tag :zip, @shelter.zip %><br>
+  <%= text_field_tag :zip, nil, placeholder: @shelter.zip %><br>
 
   <%= submit_tag "Update Shelter" %>
 <% end %>

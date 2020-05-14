@@ -1,16 +1,16 @@
 <%= form_tag "/reviews/#{@review.id}", method: :patch do%>
 
   <%= label_tag "Title of Review"%><br>
-  <%= text_field_tag :title, @review.title%><br>
+  <%= text_field_tag :title, nil, placeholder: @review.title%><br>
 
   <%= label_tag "Rating"%><br>
-  <%= number_field_tag :rating, @review.rating%><br>
+  <%= number_field_tag :rating, nil, placeholder: @review.rating%><br>
 
-  <%= label_tag "What you have to say:"%><br>
-  <%= text_field_tag :content, @review.content%><br>
+  <%= label_tag "Content:"%><br>
+  <%= text_field_tag :content, nil, placeholder: @review.content%><br>
 
   <%= label_tag "Optional Image"%><br>
-  <%= text_field_tag :image, @review.image%><br>
+  <%= text_field_tag :image, nil, placeholder: @review.image%><br>
 
   <%= submit_tag "Update Review" %>
 

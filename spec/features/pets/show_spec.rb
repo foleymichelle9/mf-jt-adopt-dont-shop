@@ -104,4 +104,31 @@ RSpec.describe 'As a visitor' do
       expect(lucille.adoptable_status).to eq("Adoptable!")
     end
   end
+
+  it 'has a button to favorite that pet' do
+    shelter1 = Shelter.create(name: "Pet House",
+                              address: "12 Main St.",
+                              city: "Denver",
+                              state: "Colorado",
+                              zip: "80001")
+
+    lucille = shelter1.pets.create!(image: 'https://justsomething.co/wp-content/uploads/2014/08/pitbull-photos-13.jpg',
+                                    name: "Lucille",
+                                    age: 3,
+                                    status: false,
+                                    description: "Lovable pitbull",
+                                    sex: "female")
+
+    visit "/pets/#{lucille.id}"
+
+    click_button "Add to Favorites"
+
+    expect(current_path).to eq("/pets/#{lucille.id}")
+    expect(page).to have_content("You have added #{lucille.name} to your favorites.")
+  end
 end
+
+# When I click the button or link
+# I'm taken back to that pet's show page
+# I see a flash message indicating that the pet has been added to my favorites list
+# The favorite indicator in the nav bar has incremented by one

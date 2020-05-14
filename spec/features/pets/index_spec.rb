@@ -92,9 +92,12 @@ RSpec.describe 'As a visitor' do
       end
 
       expect(current_path).to eq("/pets/#{@lucille.id}/edit")
-
+      fill_in :name, with: "#{@lucille.name}"
       fill_in :image, with: "https://www.petmd.com/sites/default/files/Pit-Bull-Dog-Facts-1168732600_0.jpg"
-
+      fill_in :age, with: "#{@lucille.age}"
+      fill_in :description, with: "#{@lucille.status}"
+      fill_in :sex, with: "#{@lucille.sex}"
+      
       click_button "Update Pet"
 
       expect(current_path).to eq("/pets/#{@lucille.id}")

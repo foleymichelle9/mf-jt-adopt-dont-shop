@@ -18,7 +18,8 @@
   <p><strong>Rating: <%= review.rating %></strong></p>
   <p><strong>Content: <%= review.content %></strong></p>
   <img src="<%= review.image%>" width= "200", height= auto></img><br>
-  <%= link_to "Edit Review", "/reviews/#{review.id}/edit", method: :get %>
+  <%= link_to "Edit Review", "/reviews/#{review.id}/edit", method: :get %><br>
+  <%= link_to "Delete Review", "/reviews/#{review.id}", method: :delete %>
 </section>
 <% end %>
 </ol>

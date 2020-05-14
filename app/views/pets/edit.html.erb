@@ -1,14 +1,14 @@
 <%= form_tag "/pets/#{@pet.id}", method: :patch do %>
 
   <p><%= label_tag "image" %></p><br>
-  <p><%= text_field_tag :image, @pet.image %></p><br>
+  <p><%= text_field_tag :image, nil, placeholder: "#{@pet.image}" %></p><br>
   <p><%= label_tag "Name" %></p><br>
-  <p><%= text_field_tag :name, @pet.name %></p><br>
+  <p><%= text_field_tag :name, nil, placeholder: "#{@pet.name}" %></p><br>
   <p><%= label_tag "Description" %></p><br>
-  <p><%= text_field_tag :description, @pet.description %></p><br>
+  <p><%= text_field_tag :description, nil, placeholder: "#{@pet.description}" %></p><br>
   <p><%= label_tag "Age" %></p><br>
-  <p><%= number_field_tag :age, @pet.age %></p><br>
+  <p><%= number_field_tag :age, nil, placeholder: "#{@pet.age}" %></p><br>
   <p><%= label_tag "Sex" %></p><br>
-  <p><%= text_field_tag :sex, @pet.sex %></p><br>
+  <p><%= text_field_tag :sex, nil, placeholder: "#{@pet.sex}" %></p><br>
   <p><%= submit_tag "Update Pet" %>
 <% end %>

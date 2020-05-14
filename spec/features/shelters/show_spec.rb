@@ -127,5 +127,22 @@ RSpec.describe 'As a visitor' do
 
       expect(current_path).to eq("/reviews/#{review1.id}/edit")
     end
+
+    it 'has a link next to each review to delete that review' do
+
+      review1 = @shelter1.reviews.create(title: "Love this place!", rating: 5, content: "This shelter has the nicest employees and the most well-behaved dogs!")
+      review2 = @shelter1.reviews.create(title: "Not a fan of this place.", rating: 1, content: "The dog I adopted from this shelter bit me!", image: "https://images-prod.healthline.com/hlcmsresource/images/imce/animal-bites-finger_thumb.jpg")
+      review3 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
+
+      visit "/shelters/#{@shelter1.id}"
+
+      expect(page).to have_content(review1.title)
+
+      within "#review-#{review1.id}" do
+        click_link "Delete Review"
+      end
+
+      expect(page).to_not have_content(review1.title)
+    end
   end
 end

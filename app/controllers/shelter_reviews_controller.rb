@@ -21,8 +21,19 @@ class ShelterReviewsController < ApplicationController
   end
 
   def update
+    @review = Review.find(params[:review_id])
+    if @review.update(shelter_review_params)
+      flash[:success]= "#{@review.title} has been updated."
+      redirect_to "/shelters/#{@review.shelter.id}"
+    else
+      flash[:error] = "Please fill in all fields."
+      render 'edit'
+    end
+  end
+
+  def destroy
     review = Review.find(params[:review_id])
-    review.update(shelter_review_params)
+    review.delete
     redirect_to "/shelters/#{review.shelter.id}"
   end
 

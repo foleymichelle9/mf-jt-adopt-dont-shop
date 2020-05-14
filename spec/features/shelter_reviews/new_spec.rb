@@ -60,6 +60,7 @@ RSpec.describe 'As a visitor' do
       fill_in :image, with: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR_kZdgps2QwraWJyKH5IAX7J4v84mAZXVlYBQ2JfPXg6XgdHSn&usqp=CAU"
       fill_in :title, with: "Ugly dogs!"
       fill_in :content, with: "All of the employees went out of there way to make sure
+      fill_in :title, with: 
       that we found the perfect dog to be the newest member of our family."
 
       click_button "Create Review"
