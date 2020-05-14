@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Favorites index page' do
+  it "shows a message when index page is visited without any pets favorited" do
+
+    visit "/favorites"
+
+    expect(page).to have_content("You have not favorited any pets")
+  end
+
+
   before(:each) do
     @shelter1 = Shelter.create(name: "Pet House",
                                  address: "12 Main St.",
@@ -121,10 +129,6 @@ end
 
 #
 # As a visitor
-# When I have added pets to my favorites list
+# When I have not added any pets to my favorites list
 # And I visit my favorites page ("/favorites")
-# Next to each pet, I see a button or link to remove that pet from my favorites
-# When I click on that button or link to remove a favorite
-# A delete request is sent to "/favorites/:pet_id"
-# And I'm redirected back to the favorites page where I no longer see that pet listed
-# And I also see that the favorites indicator has decremented by 1
+# I see text saying that I have no favorited pets

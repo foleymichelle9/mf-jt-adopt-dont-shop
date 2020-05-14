@@ -2,6 +2,10 @@ class FavoritesController < ApplicationController
 
   def index
     @favorite_pets = favorites.favorite_pets
+    if @favorite_pets == []
+      flash[:notice] = "You have not favorited any pets"
+      redirect_to "/pets"
+    end
   end
 
   def update
