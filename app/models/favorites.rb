@@ -17,4 +17,9 @@ class Favorites
     @contents[id.to_s].to_i
   end
 
+  def favorite_pets
+    acc = @contents.keys.map{|str| str.to_i}
+    acc.map{|num| Pet.find(num)}
+  end
+
 end

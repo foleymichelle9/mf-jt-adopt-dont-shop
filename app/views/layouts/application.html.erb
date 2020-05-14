@@ -12,7 +12,7 @@
     <nav class = "topnav">
       <%= link_to "Pet Index", "/pets" %>
       <%= link_to "Shelter Index", "/shelters" %>
-      <p>Number of pets favorited: <%= favorites.total_count %> </p>
+      <p><%= link_to "Number of pets favorited:", "/favorites" %> <%= favorites.total_count %></p>
     </nav>
 
     <% flash.each do |name, msg| %>
