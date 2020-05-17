@@ -44,4 +44,76 @@ RSpec.describe Favorites, type: :model do
       expect(favorites.count_of('5')).to eq(0)
     end
   end
+
+  describe "#favorite_pets" do
+    it 'returns an array of pet objects from favorites' do
+
+      shelter1 = Shelter.create(name: "Pet House",
+                                   address: "12 Main St.",
+                                   city: "Denver",
+                                   state: "Colorado",
+                                   zip: "80001")
+
+      lucille = shelter1.pets.create!(image: 'https://justsomething.co/wp-content/uploads/2014/08/pitbull-photos-13.jpg',
+                                    name: "Lucille",
+                                    age: 3,
+                                    status: false,
+                                    sex: "female")
+
+      george = shelter1.pets.create!(image: 'https://i1.wp.com/puppytoob.com/wp-content/uploads/2017/05/Golden-retriever.jpg?resize=752%2C443',
+                                    name: "George",
+                                    age: 4,
+                                    status: false,
+                                    sex: "Male")
+
+      bob = shelter1.pets.create!(image: 'https://i.ytimg.com/vi/8FCSw-ST8hA/maxresdefault.jpg',
+                                   name: "Bob",
+                                   description: "Handsome Pug!",
+                                   age: 2,
+                                   sex: "male")
+
+      favorites = Favorites.new({})
+      favorites.add_pet(lucille.id)
+      favorites.add_pet(george.id)
+      favorites.add_pet(bob.id)
+
+      expect(favorites.favorite_pets).to eq([lucille, george, bob])
+    end
+  end
+
+  describe '#selection_form_ready' do
+    it 'returns an array of arrays containing pet names with number starting at 1' do
+
+      shelter1 = Shelter.create(name: "Pet House",
+                                   address: "12 Main St.",
+                                   city: "Denver",
+                                   state: "Colorado",
+                                   zip: "80001")
+
+      lucille = shelter1.pets.create!(image: 'https://justsomething.co/wp-content/uploads/2014/08/pitbull-photos-13.jpg',
+                                    name: "Lucille",
+                                    age: 3,
+                                    status: false,
+                                    sex: "female")
+
+      george = shelter1.pets.create!(image: 'https://i1.wp.com/puppytoob.com/wp-content/uploads/2017/05/Golden-retriever.jpg?resize=752%2C443',
+                                    name: "George",
+                                    age: 4,
+                                    status: false,
+                                    sex: "Male")
+
+      bob = shelter1.pets.create!(image: 'https://i.ytimg.com/vi/8FCSw-ST8hA/maxresdefault.jpg',
+                                   name: "Bob",
+                                   description: "Handsome Pug!",
+                                   age: 2,
+                                   sex: "male")
+
+      favorites = Favorites.new({})
+      favorites.add_pet(lucille.id)
+      favorites.add_pet(george.id)
+      favorites.add_pet(bob.id)
+
+      expect(favorites.selection_form_ready).to eq([[lucille.name, 1], [george.name, 2],[bob.name, 3]])
+    end
+  end
 end

@@ -22,4 +22,12 @@ class Favorites
     acc.map{|num| Pet.find(num)}
   end
 
+  def selection_form_ready
+    favorite_pets.map.with_index{|pet, index| [pet.name, index+1]}
+  end
+
+  def delete_all
+    @contents.clear
+  end
+
 end

@@ -1,15 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Favorites index page' do
-
-  xit "shows a message when index page is visited without any pets favorited" do
-
-    visit "/favorites"
-
-    expect(page).to have_content("You have not favorited any pets")
-  end
-
-
+RSpec.describe 'Application new page' do
   before(:each) do
     @shelter1 = Shelter.create(name: "Pet House",
                                  address: "12 Main St.",
@@ -82,70 +73,9 @@ RSpec.describe 'Favorites index page' do
     expect(page).to have_content("Number of pets favorited: 4")
   end
 
-  it 'shows all the pets I have favorited including pets name and image' do
-
-    visit "/favorites"
-
-    expect(page).to have_content("#{@lucille.name}")
-    expect(page).to have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to have_content("#{@george.name}")
-    expect(page).to have_css("img[src*= '#{@george.image}']")
-    expect(page).to have_content("#{@bob.name}")
-    expect(page).to have_css("img[src*= '#{@bob.image}']")
-    expect(page).to have_content("#{@gladys.name}")
-    expect(page).to have_css("img[src*= '#{@gladys.image}']")
-
-    expect(page).to_not have_content("#{@maceo.name}")
-    expect(page).to_not have_content("#{@charlie.name}")
+  it 'has a section to select one or more of the pets I have favorited for which the form will apply' do
+    
+    visit "/applications/new"
   end
 
-  it "has a button next to each pet to remove that pet from favorites" do
-
-    visit "/favorites"
-    within ".pet-#{@lucille.id}" do
-      click_button "Remove from Favorites"
-    end
-
-    expect(page).to_not have_css("img[src*= '#{@lucille.image}']")
-    expect(current_path).to eq("/favorites")
-  end
-
-  it 'has a link to remove all favorited pets' do
-
-    visit "/favorites"
-
-    expect(page).to have_content("#{@lucille.name}")
-    expect(page).to have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to have_content("#{@george.name}")
-    expect(page).to have_css("img[src*= '#{@george.image}']")
-    expect(page).to have_content("#{@bob.name}")
-    expect(page).to have_css("img[src*= '#{@bob.image}']")
-    expect(page).to have_content("#{@gladys.name}")
-    expect(page).to have_css("img[src*= '#{@gladys.image}']")
-
-    click_link "Clear Favorites"
-
-    expect(page).to_not have_content("#{@lucille.name}")
-    expect(page).to_not have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to_not have_content("#{@george.name}")
-    expect(page).to_not have_css("img[src*= '#{@george.image}']")
-    expect(page).to_not have_content("#{@bob.name}")
-    expect(page).to_not have_css("img[src*= '#{@bob.image}']")
-    expect(page).to_not have_content("#{@gladys.name}")
-    expect(page).to_not have_css("img[src*= '#{@gladys.image}']")
-  end
-
-  it 'has a button to apply for one or more pets that have been favorited' do
-
-    visit "/favorites"
-
-    click_link "Adopt one (or more!) of these pets"    
-  end
 end
-
-
-#
-# As a visitor
-# When I have not added any pets to my favorites list
-# And I visit my favorites page ("/favorites")
-# I see text saying that I have no favorited pets
