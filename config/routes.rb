@@ -41,4 +41,5 @@ Rails.application.routes.draw do
 
   #applications
   get '/applications/new', to: 'applications#new'
+  post '/applications', to: 'applications#create'
 end
