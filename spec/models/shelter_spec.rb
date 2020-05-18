@@ -11,6 +11,7 @@ RSpec.describe Shelter, type: :model do
 
   describe 'relationships' do
     it {should have_many :pets}
+    it {should have_many :reviews}
   end
 
   describe 'methods' do
@@ -44,7 +45,7 @@ RSpec.describe Shelter, type: :model do
 
       expect(shelter1.num_pets).to eq(2)
       expect(shelter2.num_pets).to eq(1)
-      
+
     end
   end
 

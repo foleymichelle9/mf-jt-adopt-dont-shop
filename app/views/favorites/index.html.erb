@@ -1,0 +1,13 @@
+<h1>Pets You Have Favorited</h1>
+<p align="center"> <%= link_to "Adopt one (or more!) of these pets", "/applications/new" %></p>
+<ol>
+<% @favorite_pets.each do |pet| %>
+<section class="pet-<%=pet.id%>">
+  <li><%= link_to pet.name, "/pets/#{pet.id}" %></li>
+  <img src="<%= pet.image%>" width=  "400", height= auto></img>
+  <%= button_to "Remove from Favorites", "/favorites/#{pet.id}", method: :delete %>
+</section>
+<% end %>
+<% if @favorite_pets.count > 1 %>
+  <%= link_to "Clear Favorites", "/favorites", method: :delete %>
+<% end %>

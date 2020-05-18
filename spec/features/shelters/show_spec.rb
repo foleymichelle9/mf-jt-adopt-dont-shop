@@ -31,7 +31,6 @@ RSpec.describe 'As a visitor' do
                                      name: "George",
                                      age: 4,
                                      sex: "Male")
-
     end
 
     it 'can see the shelter with that id and all its information' do
@@ -76,5 +75,74 @@ RSpec.describe 'As a visitor' do
       expect(page).to have_content(@george.name)
     end
 
+    it 'has a list of all reviews for that shelter' do
+
+      review1 = @shelter1.reviews.create(title: "Love this place!", rating: 5, content: "This shelter has the nicest employees and the most well-behaved dogs!")
+      review2 = @shelter1.reviews.create(title: "Not a fan of this place.", rating: 1, content: "The dog I adopted from this shelter bit me!", image: "https://images-prod.healthline.com/hlcmsresource/images/imce/animal-bites-finger_thumb.jpg")
+      review3 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
+
+      visit "/shelters/#{@shelter1.id}"
+
+      expect(page).to have_content("All reviews for #{@shelter1.name}:")
+
+      within "#review-#{review1.id}" do
+        expect(page).to have_content("#{review1.title}")
+        expect(page).to have_content("#{review1.rating}")
+        expect(page).to have_content("#{review1.content}")
+      end
+
+      within "#review-#{review2.id}" do
+        expect(page).to have_content("#{review2.title}")
+        expect(page).to have_content("#{review2.rating}")
+        expect(page).to have_content("#{review2.content}")
+      end
+
+      within "#review-#{review3.id}" do
+        expect(page).to have_content("#{review3.title}")
+        expect(page).to have_content("#{review3.rating}")
+        expect(page).to have_content("#{review3.content}")
+      end
+    end
+
+    it 'has a link to add a new review for this shelter' do
+
+      visit "/shelters/#{@shelter1.id}"
+
+      click_link "Add Review"
+
+      expect(current_path).to eq("/shelters/#{@shelter1.id}/reviews/new")
+    end
+
+    it 'has a link next to each review to edit that review' do
+
+      review1 = @shelter1.reviews.create(title: "Love this place!", rating: 5, content: "This shelter has the nicest employees and the most well-behaved dogs!")
+      review2 = @shelter1.reviews.create(title: "Not a fan of this place.", rating: 1, content: "The dog I adopted from this shelter bit me!", image: "https://images-prod.healthline.com/hlcmsresource/images/imce/animal-bites-finger_thumb.jpg")
+      review3 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
+
+      visit "/shelters/#{@shelter1.id}"
+
+      within "#review-#{review1.id}" do
+        click_link "Edit Review"
+      end
+
+      expect(current_path).to eq("/reviews/#{review1.id}/edit")
+    end
+
+    it 'has a link next to each review to delete that review' do
+
+      review1 = @shelter1.reviews.create(title: "Love this place!", rating: 5, content: "This shelter has the nicest employees and the most well-behaved dogs!")
+      review2 = @shelter1.reviews.create(title: "Not a fan of this place.", rating: 1, content: "The dog I adopted from this shelter bit me!", image: "https://images-prod.healthline.com/hlcmsresource/images/imce/animal-bites-finger_thumb.jpg")
+      review3 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
+
+      visit "/shelters/#{@shelter1.id}"
+
+      expect(page).to have_content(review1.title)
+
+      within "#review-#{review1.id}" do
+        click_link "Delete Review"
+      end
+
+      expect(page).to_not have_content(review1.title)
+    end
   end
 end
