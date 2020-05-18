@@ -1,15 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Favorites index page' do
-
-  xit "shows a message when index page is visited without any pets favorited" do
-
-    visit "/favorites"
-
-    expect(page).to have_content("You have not favorited any pets")
-  end
-
-
+RSpec.describe 'Application show page' do
   before(:each) do
     @shelter1 = Shelter.create(name: "Pet House",
                                  address: "12 Main St.",
@@ -65,6 +56,7 @@ RSpec.describe 'Favorites index page' do
                                    description: "Your new best friend",
                                    sex: "male")
 
+
     visit "/pets/#{@lucille.id}"
     click_button "Add to Favorites"
     expect(page).to have_content("Number of pets favorited: 1")
@@ -80,67 +72,36 @@ RSpec.describe 'Favorites index page' do
     visit "/pets/#{@gladys.id}"
     click_button "Add to Favorites"
     expect(page).to have_content("Number of pets favorited: 4")
-  end
-
-  it 'shows all the pets I have favorited including pets name and image' do
-
-    visit "/favorites"
-
-    expect(page).to have_content("#{@lucille.name}")
-    expect(page).to have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to have_content("#{@george.name}")
-    expect(page).to have_css("img[src*= '#{@george.image}']")
-    expect(page).to have_content("#{@bob.name}")
-    expect(page).to have_css("img[src*= '#{@bob.image}']")
-    expect(page).to have_content("#{@gladys.name}")
-    expect(page).to have_css("img[src*= '#{@gladys.image}']")
-
-    expect(page).to_not have_content("#{@maceo.name}")
-    expect(page).to_not have_content("#{@charlie.name}")
-  end
-
-  it "has a button next to each pet to remove that pet from favorites" do
-
-    visit "/favorites"
-    within ".pet-#{@lucille.id}" do
-      click_button "Remove from Favorites"
     end
 
-    expect(page).to_not have_css("img[src*= '#{@lucille.image}']")
-    expect(current_path).to eq("/favorites")
+    it 'shows all the information attached to this application' do
+
+    visit "/applications/new"
+
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
+
+    fill_in :name, with: "Josh"
+    fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    fill_in :description, with: "I'm a good person and I love dogs."
+
+    click_button "Submit Application"
+
+    application = Application.last
+
+    visit "/applications/#{application.id}"
+    expect(page).to have_content("Josh")
+    expect(page).to have_content("123 Main St")
+    expect(page).to have_content("Denver")
+    expect(page).to have_content("Colorado")
+    expect(page).to have_content("80209")
+    expect(page).to have_content("720-319-2655")
+    expect(page).to have_content("I'm a good person and I love dogs.")
+    expect(page).to have_link("Lucille")
+    expect(page).to have_link("Bob")
   end
-
-  it 'has a link to remove all favorited pets' do
-
-    visit "/favorites"
-
-    expect(page).to have_content("#{@lucille.name}")
-    expect(page).to have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to have_content("#{@george.name}")
-    expect(page).to have_css("img[src*= '#{@george.image}']")
-    expect(page).to have_content("#{@bob.name}")
-    expect(page).to have_css("img[src*= '#{@bob.image}']")
-    expect(page).to have_content("#{@gladys.name}")
-    expect(page).to have_css("img[src*= '#{@gladys.image}']")
-
-    click_link "Clear Favorites"
-
-    expect(page).to_not have_content("#{@lucille.name}")
-    expect(page).to_not have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to_not have_content("#{@george.name}")
-    expect(page).to_not have_css("img[src*= '#{@george.image}']")
-    expect(page).to_not have_content("#{@bob.name}")
-    expect(page).to_not have_css("img[src*= '#{@bob.image}']")
-    expect(page).to_not have_content("#{@gladys.name}")
-    expect(page).to_not have_css("img[src*= '#{@gladys.image}']")
-  end
-
-  it 'has a button to apply for one or more pets that have been favorited' do
-
-    visit "/favorites"
-
-    click_link "Adopt one (or more!) of these pets"
-    expect(current_path).to eq("/applications/new")
-  end
-
 end

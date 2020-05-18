@@ -1,0 +1,30 @@
+<h1>Adoption Form</h1>
+
+<%= form_tag "/applications", method: :post do  %>
+
+  <%= label_tag "Dog(s) for whom you'd would like to apply for adoption:" %><br>
+  <%= select_tag 'pets', options_for_select(favorites.selection_form_ready), multiple: true %><br>
+
+  <%= label_tag "Name:" %><br>
+  <%= text_field_tag :name %><br>
+
+  <%= label_tag "Address:" %><br>
+  <%= text_field_tag :address %><br>
+
+  <%= label_tag "City:" %><br>
+  <%= text_field_tag :city %><br>
+
+  <%= label_tag "State:" %><br>
+  <%= text_field_tag :state %><br>
+
+  <%= label_tag "Zipcode:" %><br>
+  <%= text_field_tag :zip %><br>
+
+  <%= label_tag "Phone Number:" %><br>
+  <%= text_field_tag :phone %><br>
+
+  <%= label_tag "Why this dog(s) and you would be a good match for one another:" %><br>
+  <%= text_field_tag :description %><br>
+
+  <%= submit_tag "Submit Application" %>
+<% end  %>

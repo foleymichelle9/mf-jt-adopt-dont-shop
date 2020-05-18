@@ -6,6 +6,8 @@ class Pet < ApplicationRecord
                         :sex
 
   belongs_to :shelter
+  has_many :application_pets
+  has_many :applications, through: :application_pets
 
   def adoptable_status
     if status
