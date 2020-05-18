@@ -113,7 +113,7 @@ RSpec.describe Favorites, type: :model do
       favorites.add_pet(george.id)
       favorites.add_pet(bob.id)
 
-      expect(favorites.selection_form_ready).to eq([[lucille.name, 1], [george.name, 2],[bob.name, 3]])
+      expect(favorites.selection_form_ready).to eq([[lucille.name, lucille.id], [george.name, george.id],[bob.name, bob.id]])
     end
   end
 end

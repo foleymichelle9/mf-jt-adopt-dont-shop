@@ -23,7 +23,8 @@ class Favorites
   end
 
   def selection_form_ready
-    favorite_pets.map.with_index{|pet, index| [pet.name, index+1]}
+    favorite_pets.map{ |pet|[pet.name, pet.id] }
+    #favorite_pets.map.with_index{|pet, index| [pet.name, index+1]}
   end
 
   def delete_all

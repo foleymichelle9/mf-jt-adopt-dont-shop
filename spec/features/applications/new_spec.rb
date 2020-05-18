@@ -74,8 +74,73 @@ RSpec.describe 'Application new page' do
   end
 
   it 'has a section to select one or more of the pets I have favorited for which the form will apply' do
-    
+
     visit "/applications/new"
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
+
+    fill_in :name, with: "Josh"
+    fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    fill_in :description, with: "I'm a good person and I love dogs."
+
+    click_button "Submit Application"
+    expect(page).to have_content("Your application for Lucille and Bob has been received.")
+  end
+
+  it 'gives error messages when the form is not completed fully' do
+
+    #missing name
+    visit "/applications/new"
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
+
+    #fill_in :name, with: "Josh"
+    fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    fill_in :description, with: "I'm a good person and I love dogs."
+
+    click_button "Submit Application"
+    expect(page).to have_content("Please tell us your name so we can process your application")
+
+    #missing description
+    visit "/applications/new"
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
+
+    fill_in :name, with: "Josh"
+    fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    #fill_in :description, with: "I'm a good person and I love dogs."
+
+    click_button "Submit Application"
+    expect(page).to have_content("Please let us know why you would like to adopt this pet.")
+
+    #missing address
+    #missing name
+    visit "/applications/new"
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
+
+    fill_in :name, with: "Josh"
+    #fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    fill_in :description, with: "I'm a good person and I love dogs."
+
+    click_button "Submit Application"
+    expect(page).to have_content("Address can't be blank")
   end
 
 end

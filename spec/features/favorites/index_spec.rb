@@ -139,8 +139,10 @@ RSpec.describe 'Favorites index page' do
 
     visit "/favorites"
 
-    click_link "Adopt one (or more!) of these pets"    
+    click_link "Adopt one (or more!) of these pets"
+    expect(current_path).to eq("/applications/new")
   end
+
 end
 
 
