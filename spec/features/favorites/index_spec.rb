@@ -144,10 +144,3 @@ RSpec.describe 'Favorites index page' do
   end
 
 end
-
-
-#
-# As a visitor
-# When I have not added any pets to my favorites list
-# And I visit my favorites page ("/favorites")
-# I see text saying that I have no favorited pets

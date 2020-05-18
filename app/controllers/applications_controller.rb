@@ -4,6 +4,10 @@ class ApplicationsController < ApplicationController
     @pets = favorites.selection_form_ready
   end
 
+  def show
+    @application = Application.find(params[:id])
+  end
+
   def create
     pets = Pet.where(id: params[:pets])
     application = Application.new(application_params)
