@@ -43,8 +43,7 @@ RSpec.describe 'As a visitor' do
 
       click_button "Create Review"
 
-      #expect(current_path).to eq("/shelters/#{shelter1.id}/reviews/new")
-      expect(page).to have_content("All fields are required.")
+      expect(page).to have_content("All fields must be filled in.")
     end
 
     it 'will give an error message when the rating is not filled in on the new review form' do
@@ -60,13 +59,12 @@ RSpec.describe 'As a visitor' do
       fill_in :image, with: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR_kZdgps2QwraWJyKH5IAX7J4v84mAZXVlYBQ2JfPXg6XgdHSn&usqp=CAU"
       fill_in :title, with: "Ugly dogs!"
       fill_in :content, with: "All of the employees went out of there way to make sure
-      fill_in :title, with: 
       that we found the perfect dog to be the newest member of our family."
 
       click_button "Create Review"
 
       #expect(current_path).to eq("/shelters/#{shelter1.id}/reviews/new")
-      expect(page).to have_content("All fields are required.")
+      expect(page).to have_content("All fields must be filled in.")
     end
 
     it 'will give an error message when the content is not filled in on the new review form' do
@@ -88,7 +86,7 @@ RSpec.describe 'As a visitor' do
       expect(page).to have_field(:image)
       expect(page).to have_field(:title)
       expect(page).to have_field(:rating)
-      expect(page).to have_content("All fields are required.")
+      expect(page).to have_content("Please fill out a short message regarding your experience with #{shelter1.name}")
     end
   end
 end

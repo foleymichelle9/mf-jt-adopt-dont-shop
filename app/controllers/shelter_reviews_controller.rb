@@ -11,8 +11,12 @@ class ShelterReviewsController < ApplicationController
       flash[:success] = "Your review of #{@shelter.name} has been saved"
       redirect_to "/shelters/#{@shelter.id}"
     else
-      flash[:error] = "All fields are required."
-      render 'new'
+      if review.errors.full_messages == ["Content can't be blank"]
+        flash[:error] = "Please fill out a short message regarding your experience with #{@shelter.name}"
+      else
+        flash[:error] =  "All fields must be filled in."
+      end
+      render :new
     end
   end
 

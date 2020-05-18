@@ -37,3 +37,9 @@ p {
   background-color: green;
   color: white;
 }
+
+.notice-flash {
+  padding: 10px;
+  background-color: orange;
+  color: white;
+}

@@ -4,7 +4,7 @@
   <%= text_field_tag :title%><br>
 
   <%= label_tag "Rating"%><br>
-  <%= number_field_tag :rating%><br>
+  <%= number_field_tag :rating, nil, in:1..5%><br>
 
   <%= label_tag "What you have to say:"%><br>
   <%= text_field_tag :content%><br>

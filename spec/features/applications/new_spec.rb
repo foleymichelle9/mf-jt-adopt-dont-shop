@@ -1,15 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Favorites index page' do
-
-  xit "shows a message when index page is visited without any pets favorited" do
-
-    visit "/favorites"
-
-    expect(page).to have_content("You have not favorited any pets")
-  end
-
-
+RSpec.describe 'Application new page' do
   before(:each) do
     @shelter1 = Shelter.create(name: "Pet House",
                                  address: "12 Main St.",
@@ -82,65 +73,74 @@ RSpec.describe 'Favorites index page' do
     expect(page).to have_content("Number of pets favorited: 4")
   end
 
-  it 'shows all the pets I have favorited including pets name and image' do
+  it 'has a section to select one or more of the pets I have favorited for which the form will apply' do
 
-    visit "/favorites"
+    visit "/applications/new"
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
 
-    expect(page).to have_content("#{@lucille.name}")
-    expect(page).to have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to have_content("#{@george.name}")
-    expect(page).to have_css("img[src*= '#{@george.image}']")
-    expect(page).to have_content("#{@bob.name}")
-    expect(page).to have_css("img[src*= '#{@bob.image}']")
-    expect(page).to have_content("#{@gladys.name}")
-    expect(page).to have_css("img[src*= '#{@gladys.image}']")
+    fill_in :name, with: "Josh"
+    fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    fill_in :description, with: "I'm a good person and I love dogs."
 
-    expect(page).to_not have_content("#{@maceo.name}")
-    expect(page).to_not have_content("#{@charlie.name}")
+    click_button "Submit Application"
+    expect(page).to have_content("Your application for Lucille and Bob has been received.")
   end
 
-  it "has a button next to each pet to remove that pet from favorites" do
+  it 'gives error messages when the form is not completed fully' do
 
-    visit "/favorites"
-    within ".pet-#{@lucille.id}" do
-      click_button "Remove from Favorites"
-    end
+    #missing name
+    visit "/applications/new"
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
 
-    expect(page).to_not have_css("img[src*= '#{@lucille.image}']")
-    expect(current_path).to eq("/favorites")
-  end
+    #fill_in :name, with: "Josh"
+    fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    fill_in :description, with: "I'm a good person and I love dogs."
 
-  it 'has a link to remove all favorited pets' do
+    click_button "Submit Application"
+    expect(page).to have_content("Please tell us your name so we can process your application")
 
-    visit "/favorites"
+    #missing description
+    visit "/applications/new"
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
 
-    expect(page).to have_content("#{@lucille.name}")
-    expect(page).to have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to have_content("#{@george.name}")
-    expect(page).to have_css("img[src*= '#{@george.image}']")
-    expect(page).to have_content("#{@bob.name}")
-    expect(page).to have_css("img[src*= '#{@bob.image}']")
-    expect(page).to have_content("#{@gladys.name}")
-    expect(page).to have_css("img[src*= '#{@gladys.image}']")
+    fill_in :name, with: "Josh"
+    fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    #fill_in :description, with: "I'm a good person and I love dogs."
 
-    click_link "Clear Favorites"
+    click_button "Submit Application"
+    expect(page).to have_content("Please let us know why you would like to adopt this pet.")
 
-    expect(page).to_not have_content("#{@lucille.name}")
-    expect(page).to_not have_css("img[src*= '#{@lucille.image}']")
-    expect(page).to_not have_content("#{@george.name}")
-    expect(page).to_not have_css("img[src*= '#{@george.image}']")
-    expect(page).to_not have_content("#{@bob.name}")
-    expect(page).to_not have_css("img[src*= '#{@bob.image}']")
-    expect(page).to_not have_content("#{@gladys.name}")
-    expect(page).to_not have_css("img[src*= '#{@gladys.image}']")
-  end
+    #missing address
+    #missing name
+    visit "/applications/new"
+    select('Lucille', from: 'pets')
+    select('Bob', from: 'pets')
 
-  it 'has a button to apply for one or more pets that have been favorited' do
+    fill_in :name, with: "Josh"
+    #fill_in :address, with: "123 Main St"
+    fill_in :city, with: "Denver"
+    fill_in :state, with: "Colorado"
+    fill_in :zip, with: "80209"
+    fill_in :phone, with: "720-319-2655"
+    fill_in :description, with: "I'm a good person and I love dogs."
 
-    visit "/favorites"
-
-    click_link "Adopt one (or more!) of these pets"
-    expect(current_path).to eq("/applications/new")
+    click_button "Submit Application"
+    expect(page).to have_content("Address can't be blank")
   end
 
 end
