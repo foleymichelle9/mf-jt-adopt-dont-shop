@@ -23,13 +23,13 @@ RSpec.describe 'Application show page' do
     @lucille = @shelter1.pets.create!(image: 'https://justsomething.co/wp-content/uploads/2014/08/pitbull-photos-13.jpg',
                                     name: "Lucille",
                                     age: 3,
-                                    status: false,
+                                    status: true,
                                     sex: "female")
 
     @george = @shelter2.pets.create!(image: 'https://i1.wp.com/puppytoob.com/wp-content/uploads/2017/05/Golden-retriever.jpg?resize=752%2C443',
                                     name: "George",
                                     age: 4,
-                                    status: false,
+                                    status: true,
                                     sex: "Male")
 
     @bob = @shelter3.pets.create!(image: 'https://i.ytimg.com/vi/8FCSw-ST8hA/maxresdefault.jpg',
@@ -78,8 +78,8 @@ RSpec.describe 'Application show page' do
 
     visit "/applications/new"
 
-    select('Lucille', from: 'pets')
-    select('Bob', from: 'pets')
+    check(@lucille.id)
+    check(@bob.id)
 
     fill_in :name, with: "Josh"
     fill_in :address, with: "123 Main St"
@@ -103,5 +103,76 @@ RSpec.describe 'Application show page' do
     expect(page).to have_content("I'm a good person and I love dogs.")
     expect(page).to have_link("Lucille")
     expect(page).to have_link("Bob")
+  end
+
+  it 'has a link to approve the application for each pet' do
+
+    app1 = Application.create!(name: "Josh T",
+                               address: "123 Main St.",
+                               city: "Denver",
+                               state: "Colorado",
+                               zip: "80209",
+                               phone: "720-319-2655",
+                               description: "I really love animals")
+
+     ApplicationPet.create(application_id: app1.id, pet_id: @lucille.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @george.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @gladys.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @charlie.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @maceo.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @bob.id)
+
+     visit "/pets/#{@lucille.id}"
+     expect(page).to have_content("Adoptable")
+
+     visit "/applications/#{app1.id}"
+
+     within ".pet-#{@lucille.id}" do
+       click_link "Approve application"
+     end
+
+     visit "/pets/#{@lucille.id}"
+     expect(page).to have_content("Pending")
+  end
+
+  it 'can approve the application for any number of pets' do
+    app1 = Application.create!(name: "Josh T",
+                               address: "123 Main St.",
+                               city: "Denver",
+                               state: "Colorado",
+                               zip: "80209",
+                               phone: "720-319-2655",
+                               description: "I really love animals")
+
+     ApplicationPet.create(application_id: app1.id, pet_id: @lucille.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @george.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @gladys.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @charlie.id)
+     ApplicationPet.create(application_id: app1.id, pet_id: @maceo.id)
+
+     visit "/applications/#{app1.id}"
+
+     within ".pet-#{@lucille.id}" do
+       click_link "Approve application"
+     end
+
+     visit "/applications/#{app1.id}"
+
+     within ".pet-#{@george.id}" do
+       click_link "Approve application"
+     end
+
+     visit "/applications/#{app1.id}"
+
+     within ".pet-#{@gladys.id}" do
+       click_link "Approve application"
+     end
+
+     visit "/applications/#{app1.id}"
+
+     within ".pet-#{@charlie.id}" do
+       click_link "Approve application"
+     end
+
   end
 end

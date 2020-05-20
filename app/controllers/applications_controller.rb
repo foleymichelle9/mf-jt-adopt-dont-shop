@@ -9,15 +9,15 @@ class ApplicationsController < ApplicationController
   end
 
   def create
-    pets = Pet.where(id: params[:pets])
+    pets = Pet.where(id: params.keys)
     application = Application.new(application_params)
     if application.save
       pets.each do |pet|
         ApplicationPet.create(pet_id: pet.id, application_id: application.id)
         favorites.contents.delete(pet.id.to_s)
       end
+      redirect_to "/favorites"
       flash[:success] = "Your application for #{(pets.map{|pet| pet.name}.join(" and "))} has been received."
-      redirect_to "/favorites?page=fav"
     elsif application.errors.full_messages == ["Description can't be blank"]
       flash[:notice] = "Please let us know why you would like to adopt this pet."
       render :new

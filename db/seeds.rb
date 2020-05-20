@@ -8,6 +8,9 @@
 
 Pet.destroy_all
 Shelter.destroy_all
+Application.destroy_all
+ApplicationPet.destroy_all
+
 
 shelter1 = Shelter.create(name: "Pet House",
                            address: "12 Main St.",
