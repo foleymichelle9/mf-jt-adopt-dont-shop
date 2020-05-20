@@ -10,8 +10,13 @@
 <strong><p>Reason for adoption: <%= @application.description %></p></strong>
 <ol>
 <% @application.pets.each do |pet| %>
-<section class="pet-<%=pet.id%>">
-  <h2><li><%= link_to pet.name, "/pets/#{pet.id}" %></li></h2>
-</section>
+  <section class="pet-<%=pet.id%>">
+    <% if pet.status == true %>
+      <li><%= link_to pet.name, "/pets/#{pet.id}"%><br>
+      <%= link_to "Approve application", "/pets/#{pet.id}/applications/#{@application.id}", method: :patch %>
+    <% else %>
+      <p>This pet has a pending adoption</p>
+    <% end %>
+
+  </section>
 <% end %>
-</ol>

@@ -1,3 +1,6 @@
+
+<h1><%= @pet.hold_for %></h1>
+
 <h2><%= @pet.name %></h2>
 
 <img src="<%= @pet.image%>" width= "200", height= auto></img><br>
@@ -18,3 +21,4 @@
 <% else %>
   <p align="center"><%= link_to "Change status to Adoptable", "/pets/#{@pet.id}/pending", method: :patch %></p>
 <% end %>
+<p align="center"><%= link_to "Existing Applications for #{@pet.name}", "/pets/#{@pet.id}/applications"%></p>

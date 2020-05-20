@@ -76,8 +76,9 @@ RSpec.describe 'Application new page' do
   it 'has a section to select one or more of the pets I have favorited for which the form will apply' do
 
     visit "/applications/new"
-    select('Lucille', from: 'pets')
-    select('Bob', from: 'pets')
+
+    check(@lucille.id)
+    check(@bob.id)
 
     fill_in :name, with: "Josh"
     fill_in :address, with: "123 Main St"
@@ -95,8 +96,8 @@ RSpec.describe 'Application new page' do
 
     #missing name
     visit "/applications/new"
-    select('Lucille', from: 'pets')
-    select('Bob', from: 'pets')
+    check(@lucille.id)
+    check(@bob.id)
 
     #fill_in :name, with: "Josh"
     fill_in :address, with: "123 Main St"
@@ -111,8 +112,8 @@ RSpec.describe 'Application new page' do
 
     #missing description
     visit "/applications/new"
-    select('Lucille', from: 'pets')
-    select('Bob', from: 'pets')
+    check(@lucille.id)
+    check(@bob.id)
 
     fill_in :name, with: "Josh"
     fill_in :address, with: "123 Main St"
@@ -126,10 +127,9 @@ RSpec.describe 'Application new page' do
     expect(page).to have_content("Please let us know why you would like to adopt this pet.")
 
     #missing address
-    #missing name
     visit "/applications/new"
-    select('Lucille', from: 'pets')
-    select('Bob', from: 'pets')
+    check(@lucille.id)
+    check(@bob.id)
 
     fill_in :name, with: "Josh"
     #fill_in :address, with: "123 Main St"

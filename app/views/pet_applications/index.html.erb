@@ -1,0 +1,6 @@
+<h1>Current Applications for <%=@pet.name%> </h1>
+<ol>
+<% @pet.applications.each do |app| %>
+  <p><li><%= link_to app.name, "/applications/#{app.id}" %></li></p><br>
+<% end %>
+</ol>

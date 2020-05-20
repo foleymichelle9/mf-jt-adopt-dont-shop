@@ -3,7 +3,11 @@
 <%= form_tag "/applications", method: :post do  %>
 
   <%= label_tag "Dog(s) for whom you'd would like to apply for adoption:" %><br>
-  <%= select_tag 'pets', options_for_select(favorites.selection_form_ready), multiple: true %><br>
+
+  <% favorites.favorite_pets.each do |pet| %>
+    <%= check_box_tag(pet.id)%>
+    <%= label_tag(pet.id, pet.name)%>
+  <% end %><br>
 
   <%= label_tag "Name:" %><br>
   <%= text_field_tag :name %><br>
