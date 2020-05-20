@@ -83,7 +83,7 @@ RSpec.describe 'As a visitor' do
       expect(current_path).to eq("/pets/#{lucille.id}")
       expect(lucille.adoptable_status).to eq("Adoptable!")
     end
-  
+
     it 'has a button to favorite that pet' do
 
       visit "/pets/#{@lucille.id}"
@@ -93,10 +93,40 @@ RSpec.describe 'As a visitor' do
       expect(current_path).to eq("/pets/#{@lucille.id}")
       expect(page).to have_content("You have added #{@lucille.name} to your favorites.")
     end
+
+    it 'has a link that takes me to the application index page for that pet' do
+      app1 = Application.create!(name: "Josh T",
+                      address: "123 Main St.",
+                      city: "Denver",
+                      state: "Colorado",
+                      zip: "80209",
+                      phone: "720-319-2655",
+                      description: "I really love animals")
+
+      app2 = Application.create!(name: "Ed M",
+                      address: "222 Pleasant Dr.",
+                      city: "Boulder",
+                      state: "Colorado",
+                      zip: "80266",
+                      phone: "720-654-1234",
+                      description: "Animals love me")
+
+      app3 = Application.create!(name: "Jon M",
+                      address: "345 Green St.",
+                      city: "Denver",
+                      state: "Colorado",
+                      zip: "84444",
+                      phone: "720-398-9870",
+                      description: "The more pets the better")
+
+      ApplicationPet.create(application_id: app1.id, pet_id: @lucille.id)
+      ApplicationPet.create(application_id: app2.id, pet_id: @lucille.id)
+      ApplicationPet.create(application_id: app3.id, pet_id: @lucille.id)
+      ApplicationPet.create(application_id: app2.id, pet_id: @george.id)
+      ApplicationPet.create(application_id: app3.id, pet_id: @george.id)
+
+      visit "/pets/#{@lucille.id}"
+      click_link "Existing Applications for #{@lucille.name}"
+    end
   end
 end
-
-# When I click the button or link
-# I'm taken back to that pet's show page
-# I see a flash message indicating that the pet has been added to my favorites list
-# The favorite indicator in the nav bar has incremented by one
