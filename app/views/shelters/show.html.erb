@@ -9,6 +9,9 @@
 <%= button_to "Delete Shelter", "/shelters/#{@shelter.id}", method: :delete %>
 
 <p align="center"><%=link_to "Add Review", "/shelters/#{@shelter.id}/reviews/new"  %>
+<p align="right">Number of pets at shelter: <%=@shelter.num_pets %></p>
+<p align="right">Average rating of reviews: <%=@shelter.avg_review.round(2) %></p>
+<p align="right">Number of applications: <%=@shelter.num_apps %></p>
 
 <h3>All reviews for <%= @shelter.name %>: </h3>
 <ol>

@@ -22,9 +22,13 @@ class SheltersController < ApplicationController
   end
 
   def update
-    shelter = Shelter.find(params[:id])
-    shelter.update(shelter_params)
-    redirect_to "/shelters/#{shelter.id}"
+    @shelter = Shelter.find(params[:id])
+    if @shelter.update(shelter_params)
+      redirect_to "/shelters/#{@shelter.id}"
+    else
+      flash[:error] = @shelter.errors.full_messages.to_sentence
+      render 'edit'
+    end
   end
 
   def create
@@ -35,15 +39,19 @@ class SheltersController < ApplicationController
     elsif shelter.errors.full_messages == ["Name has already been taken"]
       flash[:error] = "Name is already in the system"
       render 'new'
-    else
-      flash[:error] = "All fields are required"
+    elsif
+      flash[:error] = shelter.errors.full_messages.to_sentence
       render 'new'
     end
   end
 
   def destroy
     shelter = Shelter.find(params[:id])
+    if shelter.pets.where(status: :false).exists?
+      flash[:error] = "Pet pending adoption, shelter can not be deleted."
+    else
     shelter.delete
+    end
     redirect_to "/shelters"
   end
 

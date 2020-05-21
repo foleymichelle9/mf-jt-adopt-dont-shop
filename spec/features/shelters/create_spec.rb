@@ -49,7 +49,23 @@ RSpec.describe 'As a visitor' do
       click_on "Create Shelter"
 
       #expect(current_path).to eq("/shelters/new")
-      expect(page).to have_content("All fields are required")
+      expect(page).to have_content("Address can't be blank")
+    end
+
+    it 'shows an error message when all fields on form are not filled in' do
+
+      visit "/shelters/new"
+
+      fill_in :name, with: "Best Companions"
+      fill_in :address, with: "123 Fake st"
+
+      fill_in :state, with: "Massachusetts"
+      fill_in :zip, with: "01010"
+
+      click_on "Create Shelter"
+
+      #expect(current_path).to eq("/shelters/new")
+      expect(page).to have_content("City can't be blank")
     end
   end
 end

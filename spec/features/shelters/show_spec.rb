@@ -144,5 +144,37 @@ RSpec.describe 'As a visitor' do
 
       expect(page).to_not have_content(review1.title)
     end
+
+    it "cannot delete a shelter when some of it's pets have a pending status" do
+
+      @georgie = @shelter2.pets.create!(image: 'https://i1.wp.com/puppytoob.com/wp-content/uploads/2017/05/Golden-retriever.jpg?resize=752%2C443',
+                                      name: "George",
+                                      age: 4,
+                                      status: false,
+                                      sex: "Male")
+
+
+      visit "/shelters/#{@shelter2.id}"
+
+      click_button 'Delete Shelter'
+
+      expect(page).to have_content("Pet pending adoption, shelter can not be deleted.")
+
+    end
+
+    it "all reviews for shelters are deleted when a shelter gets deleted" do
+
+      review1 = @shelter1.reviews.create(title: "Love this place!", rating: 5, content: "This shelter has the nicest employees and the most well-behaved dogs!")
+      review2 = @shelter1.reviews.create(title: "Not a fan of this place.", rating: 1, content: "The dog I adopted from this shelter bit me!", image: "https://images-prod.healthline.com/hlcmsresource/images/imce/animal-bites-finger_thumb.jpg")
+      review3 = @shelter1.reviews.create(title: "Favorite shelter by far!", rating: 5, content: "These people love animals!")
+
+      visit "/shelters/#{@shelter1.id}"
+
+      Review.joins(:shelter).where(shelter_id: @shelter1.id).count == 3
+
+      click_button 'Delete Shelter'
+
+      Review.joins(:shelter).where(shelter_id: @shelter1.id).nil? 
+    end
   end
 end
